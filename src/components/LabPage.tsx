@@ -1,3 +1,5 @@
+import { useScrollAnimations } from '../hooks/useGsap'
+import { labPageAnimations } from '../hooks/useLabPageAnimations'
 import Button from './Button'
 import CTABlock from './CTABlock'
 import CaseStudyCard from './CaseStudyCard'
@@ -33,8 +35,10 @@ export interface LabPageProps {
 }
 
 export default function LabPage(props: LabPageProps) {
+  const containerRef = useScrollAnimations(labPageAnimations)
+
   return (
-    <div>
+    <div ref={containerRef}>
       <section className="unit-hero">
         <img src={props.heroImage} loading="lazy" alt="" className="case-study-cover absolute" />
         <div className="w-layout-blockcontainer container w-container">

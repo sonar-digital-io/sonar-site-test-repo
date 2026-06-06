@@ -1,5 +1,6 @@
 import CaseStudyCard from '../components/CaseStudyCard'
 import CTABlock from '../components/CTABlock'
+import { useScrollAnimations, heroIntro, textReveal, fadeUp, staggerChildren, scaleIn } from '../hooks/useGsap'
 
 const impactItems = [
   'Visionaries', 'Strategists', 'Researchers', 'Designers', 'Architects',
@@ -15,8 +16,18 @@ const teamMembers = [
 ]
 
 export default function About() {
+  const containerRef = useScrollAnimations((container) => {
+    heroIntro('.above-the-fold', 0.1)(container)
+    textReveal('.heading-2')(container)
+    fadeUp('.chip', 0.08, 'top 90%')(container)
+    fadeUp('.dual-grid .paragraph-large', 0.08, 'top 82%')(container)
+    staggerChildren('.impact-listing', 0.06)(container)
+    staggerChildren('.team-wrapper', 0.08)(container)
+    scaleIn('.profile-image', 0.08)(container)
+  })
+
   return (
-    <div>
+    <div ref={containerRef}>
       <section className="above-the-fold discovery-lab">
         <div className="w-layout-blockcontainer container narrow w-container">
           <div className="w-layout-vflex atf-text-wrapper home-page">

@@ -1,5 +1,7 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Home from './pages/Home'
@@ -14,10 +16,13 @@ import YuspifySaasAdmin from './pages/YuspifySaasAdmin'
 import ScaleplexBrandIdentity from './pages/ScaleplexBrandIdentity'
 import RapidsearchCaseStudy from './pages/RapidsearchCaseStudy'
 
+gsap.registerPlugin(ScrollTrigger)
+
 function ScrollToTop() {
   const { pathname } = useLocation()
   useEffect(() => {
     window.scrollTo(0, 0)
+    ScrollTrigger.getAll().forEach(t => t.kill())
   }, [pathname])
   return null
 }

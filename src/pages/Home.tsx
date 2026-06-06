@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import Button from '../components/Button'
 import CaseStudyCard from '../components/CaseStudyCard'
 import CTABlock from '../components/CTABlock'
+import { useScrollAnimations, heroIntro, textReveal, fadeUp, parallax, scaleIn } from '../hooks/useGsap'
 
 export default function Home() {
   const splideRef = useRef<HTMLDivElement>(null)
@@ -31,6 +32,14 @@ export default function Home() {
     return () => { splideInstance?.destroy() }
   }, [])
 
+  const containerRef = useScrollAnimations((container) => {
+    heroIntro('.unit-hero', 0.1)(container)
+    textReveal('.section.blue .heading-2')(container)
+    scaleIn('.service-card-swiper', 0.12)(container)
+    fadeUp('.home-porfolio .section-title', 0.1)(container)
+    parallax('.case-study-cover.absolute', 20)(container)
+  })
+
   const services = [
     { num: '01', name: 'Discovery lab', desc: 'We make sure you solve the right problem. Market or user needs to generate revenue or internal processes to make life easier.', href: '/discovery-lab' },
     { num: '02', name: 'Design lab', desc: 'We help you solve the problem the way people need it: new products, new services, or new business models.', href: '/design-lab' },
@@ -39,7 +48,7 @@ export default function Home() {
   ]
 
   return (
-    <div>
+    <div ref={containerRef}>
       <section className="unit-hero">
         <img
           src="/images/sonar-homepage-illustration.png"

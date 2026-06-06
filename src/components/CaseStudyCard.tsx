@@ -1,4 +1,5 @@
 import Button from './Button'
+import { useScrollAnimations, fadeUp } from '../hooks/useGsap'
 
 interface CaseStudyCardProps {
   chipText?: string
@@ -11,8 +12,12 @@ interface CaseStudyCardProps {
 }
 
 export default function CaseStudyCard({ chipText = 'Case study', title, description, buttonText = 'Learn more', buttonHref, imageSrc, imageAlt = '' }: CaseStudyCardProps) {
+  const ref = useScrollAnimations((container) => {
+    fadeUp('.link-card, .case-study-thumb-wrapper', 0)(container)
+  })
+
   return (
-    <div className="case-study-grid">
+    <div className="case-study-grid" ref={ref}>
       <div className="link-card">
         <div className="w-layout-vflex chip">
           <h4 className="paragraph-normal">{chipText}</h4>

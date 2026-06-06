@@ -1,4 +1,5 @@
 import Button from './Button'
+import { useScrollAnimations, fadeUp, textReveal, staggerChildren } from '../hooks/useGsap'
 
 interface LabPromoSectionProps {
   chipText: string
@@ -9,8 +10,14 @@ interface LabPromoSectionProps {
 }
 
 export default function LabPromoSection({ chipText, title, items, buttonHref, backgroundClass }: LabPromoSectionProps) {
+  const ref = useScrollAnimations((container) => {
+    fadeUp('.chip', 0.1, 'top 90%')(container)
+    textReveal('.heading-2')(container)
+    staggerChildren('.list', 0.1)(container)
+  })
+
   return (
-    <section className={`section dark ${backgroundClass}`}>
+    <section className={`section dark ${backgroundClass}`} ref={ref}>
       <div className="w-layout-blockcontainer container narrow w-container">
         <div className="w-layout-vflex dual-grid">
           <div className="decor-on-image">

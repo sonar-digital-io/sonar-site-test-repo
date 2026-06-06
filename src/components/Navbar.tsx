@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { gsap } from 'gsap'
 
 const BOOK_CALL_URL = 'https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ2shxvK2fg74A2heUDk_8v42ZTIx_4W8YG37h8tCGcjVzw2oX8p_bhq7aV2I4sL4h2McgtN8ygb'
 
@@ -25,11 +26,44 @@ export default function Navbar() {
   const [casesOpen, setCasesOpen] = useState(false)
   const [desktopServicesOpen, setDesktopServicesOpen] = useState(false)
   const [desktopCasesOpen, setDesktopCasesOpen] = useState(false)
+  const navRef = useRef<HTMLDivElement>(null)
+  const mobileMenuRef = useRef<HTMLDivElement>(null)
 
   const isActive = (path: string) => location.pathname === path
 
+  useEffect(() => {
+    if (!navRef.current) return
+    gsap.fromTo(navRef.current,
+      { y: -20, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out', delay: 0.05 }
+    )
+    if (mobileMenuRef.current) {
+      gsap.set(mobileMenuRef.current, { clipPath: 'inset(100% 0 0 0)', opacity: 0 })
+      const items = mobileMenuRef.current.querySelectorAll('#mobile-menu .accordion, #mobile-menu .button')
+      gsap.set(items, { opacity: 0, y: 10 })
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!mobileMenuRef.current) return
+    const items = mobileMenuRef.current.querySelectorAll('#mobile-menu .accordion, #mobile-menu .button')
+    if (mobileMenuOpen) {
+      gsap.fromTo(mobileMenuRef.current,
+        { clipPath: 'inset(100% 0 0 0)', opacity: 0 },
+        { clipPath: 'inset(0% 0 0 0)', opacity: 1, duration: 0.45, ease: 'power3.out' }
+      )
+      gsap.fromTo(items,
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.35, stagger: 0.06, ease: 'power2.out', delay: 0.15 }
+      )
+    } else {
+      gsap.to(mobileMenuRef.current, { clipPath: 'inset(100% 0 0 0)', opacity: 0, duration: 0.3, ease: 'power2.in' })
+      gsap.set(items, { opacity: 0, y: 10 })
+    }
+  }, [mobileMenuOpen])
+
   return (
-    <div role="banner" className="navbar-work navbar navbar-2 w-nav">
+    <div role="banner" className="navbar-work navbar navbar-2 w-nav" ref={navRef}>
       <div className="desktop-menu">
         <div className="container w-container">
           <div className="w-layout-hflex main-nav-wrapper">
@@ -101,14 +135,14 @@ export default function Navbar() {
         </div>
       </div>
       <div className="w-layout-vflex mobile-menu">
-        <div className={`mobile-menu--openable${mobileMenuOpen ? ' opened' : ''}`} style={{ maxHeight: 'calc(100dvh - 98px)', overflowY: 'scroll', display: mobileMenuOpen ? 'block' : 'none' }}>
+        <div className={`mobile-menu--openable${mobileMenuOpen ? ' opened' : ''}`} ref={mobileMenuRef} style={{ transition: 'none', maxHeight: 'calc(100dvh - 98px)', overflowY: 'scroll' }}>
           <div className="container">
             <div id="mobile-menu" className="mobile-accordion-list">
               <div className="accordion">
                 <div className="accordion_header" onClick={() => setServicesOpen(!servicesOpen)}>
                   <div className="mob-menu-category">Services</div>
                   <div className="accordion_icon-wrapper">
-                    <div className="material-icons">add</div>
+                    <div className="material-icons" style={{ transform: servicesOpen ? 'rotate(45deg)' : 'rotate(0deg)', transition: 'transform 0.25s ease' }}>add</div>
                   </div>
                 </div>
                 <div className="accordion_panel" style={servicesOpen ? { display: 'block', height: 'auto' } : { display: 'none' }}>
@@ -125,7 +159,7 @@ export default function Navbar() {
                 <div className="accordion_header" onClick={() => setCasesOpen(!casesOpen)}>
                   <div className="mob-menu-category">Case studies</div>
                   <div className="accordion_icon-wrapper">
-                    <div className="material-icons">add</div>
+                    <div className="material-icons" style={{ transform: casesOpen ? 'rotate(45deg)' : 'rotate(0deg)', transition: 'transform 0.25s ease' }}>add</div>
                   </div>
                 </div>
                 <div className="accordion_panel" style={casesOpen ? { display: 'block', height: 'auto' } : { display: 'none' }}>

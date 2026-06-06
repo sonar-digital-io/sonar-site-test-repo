@@ -1,4 +1,5 @@
 import Button from './Button'
+import { useScrollAnimations, textReveal, fadeUp } from '../hooks/useGsap'
 
 interface CTABlockProps {
   title?: React.ReactNode
@@ -8,8 +9,14 @@ const INTRO_CALL_URL = 'https://calendar.app.google/W2cVxdgLq4jSWLW26'
 const DISCOVERY_CALL_URL = 'https://calendar.app.google/YBB9tNu7EKVPiYUu7'
 
 export default function CTABlock({ title = <>Are you ready to level up?</> }: CTABlockProps) {
+  const ref = useScrollAnimations((container) => {
+    textReveal('.heading-2')(container)
+    fadeUp('.section-title .chip', 0.1, 'top 90%')(container)
+    fadeUp('.link-card.dark', 0.15)(container)
+  })
+
   return (
-    <section className="cta-block">
+    <section className="cta-block" ref={ref}>
       <div className="w-layout-blockcontainer container narrow w-container">
         <div className="w-layout-vflex section-title centered">
           <div className="w-layout-vflex chip green">

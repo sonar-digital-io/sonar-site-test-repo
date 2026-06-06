@@ -1,9 +1,13 @@
+import { useScrollAnimations } from '../hooks/useGsap'
+import { caseStudyAnimations } from '../hooks/useCaseStudyAnimations'
 import LabPromoSection from '../components/LabPromoSection'
 import CTABlock from '../components/CTABlock'
 
 export default function YuspifySaasAdmin() {
+  const containerRef = useScrollAnimations(caseStudyAnimations)
+
   return (
-    <div>
+    <div ref={containerRef}>
       <section className="case-study-hero yfy-admin">
         <img src="/images/yfy-comp.svg" loading="lazy" alt="" className="comp" />
         <img src="/images/yfy-cover.png" loading="lazy" alt="" className="case-study-cover absolute" />

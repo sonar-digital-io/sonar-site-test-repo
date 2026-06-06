@@ -1,8 +1,12 @@
+import { useScrollAnimations } from '../hooks/useGsap'
+import { caseStudyAnimations } from '../hooks/useCaseStudyAnimations'
 import CTABlock from '../components/CTABlock'
 
 export default function ScaleplexBrandIdentity() {
+  const containerRef = useScrollAnimations(caseStudyAnimations)
+
   return (
-    <div>
+    <div ref={containerRef}>
       <section className="case-study-hero scalelab">
         <img src="/images/yfy-comp.svg" loading="lazy" alt="" className="comp" />
         <div className="w-layout-blockcontainer container w-container">

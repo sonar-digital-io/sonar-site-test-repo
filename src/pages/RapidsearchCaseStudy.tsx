@@ -1,9 +1,13 @@
+import { useScrollAnimations } from '../hooks/useGsap'
+import { caseStudyAnimations } from '../hooks/useCaseStudyAnimations'
 import LabPromoSection from '../components/LabPromoSection'
 import CTABlock from '../components/CTABlock'
 
 export default function RapidsearchCaseStudy() {
+  const containerRef = useScrollAnimations(caseStudyAnimations)
+
   return (
-    <div>
+    <div ref={containerRef}>
       <section className="above-the-fold plain">
         <div className="w-layout-blockcontainer container narrow w-container">
           <div className="w-layout-vflex atf-text-wrapper home-page">

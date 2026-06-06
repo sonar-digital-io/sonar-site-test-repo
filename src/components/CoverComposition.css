@@ -1,0 +1,77 @@
+/* CoverComposition — 14-piece collage with per-piece fade-in.
+   Ported from the sonar recruitment presentation (cover-image asset).
+   Each piece keeps the original per-piece position, delay, duration,
+   and timing function so the motion matches the source 1:1. */
+
+.composition {
+  position: relative;
+  aspect-ratio: 1261 / 1111;
+  width: 100%;
+  max-height: 100%;
+}
+
+.comp-piece {
+  position: absolute;
+  width: 33.31%; /* each piece is 420 / 1261 wide */
+  height: auto;
+  display: block;
+  opacity: 0;
+  will-change: opacity;
+}
+
+.composition img {
+  display: block;
+  height: auto;
+}
+
+/* Run the fade as soon as the composition is mounted. */
+.composition .comp-piece {
+  animation-name: comp-piece-fade;
+  animation-fill-mode: both;
+}
+
+@keyframes comp-piece-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Per-piece coordinates + per-piece animation (delay / duration / easing) */
+
+/* Left column */
+.cp-left-circle    { left: 0%;     top: 0.99%;
+  animation-delay: 0.10s; animation-duration: 0.9s;  animation-timing-function: ease-out; }
+.cp-left-mid-431   { left: 0%;     top: 38.79%;
+  animation-delay: 1.20s; animation-duration: 0.7s;  animation-timing-function: ease-in; }
+.cp-left-mid-564   { left: 0%;     top: 50.77%;
+  animation-delay: 0.80s; animation-duration: 0.9s;  animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0); }
+.cp-left-789       { left: 0.16%;  top: 71.02%;
+  animation-delay: 1.60s; animation-duration: 0.5s;  animation-timing-function: linear; }
+.cp-left-901       { left: 0.08%;  top: 81.10%;
+  animation-delay: 1.00s; animation-duration: 1.2s;  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
+
+/* Middle column — astronaut leads, full circle anchors */
+.cp-mid-astronaut  { left: 33.30%; top: 15.74%;
+  animation-delay: 0s;    animation-duration: 1.3s;  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1); }
+.cp-mid-circle     { left: 33.30%; top: 62.19%;
+  animation-delay: 0.40s; animation-duration: 1.1s;  animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+
+/* Right column */
+.cp-right-top      { left: 66.61%; top: 0%;
+  animation-delay: 0.60s; animation-duration: 0.5s;  animation-timing-function: ease-in; }
+.cp-right-62       { left: 66.61%; top: 5.57%;
+  animation-delay: 0.30s; animation-duration: 0.7s;  animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1); }
+.cp-right-174      { left: 66.61%; top: 15.65%;
+  animation-delay: 0.90s; animation-duration: 0.6s;  animation-timing-function: ease-out; }
+.cp-right-553      { left: 66.69%; top: 49.77%;
+  animation-delay: 1.10s; animation-duration: 0.8s;  animation-timing-function: linear; }
+.cp-right-615      { left: 66.69%; top: 55.36%;
+  animation-delay: 0.70s; animation-duration: 0.5s;  animation-timing-function: ease-in-out; }
+.cp-right-677      { left: 66.69%; top: 60.93%;
+  animation-delay: 1.40s; animation-duration: 0.6s;  animation-timing-function: ease-out; }
+.cp-right-789      { left: 66.69%; top: 71.01%;
+  animation-delay: 0.50s; animation-duration: 1.0s;  animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1); }
+
+/* When parent is short, keep the composition centred and scaled by height */
+@supports (aspect-ratio: 1) {
+  .composition { width: min(100%, calc(100% * 1.135)); }
+}

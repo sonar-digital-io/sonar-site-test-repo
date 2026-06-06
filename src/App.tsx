@@ -15,6 +15,7 @@ import YuspDataFlowEditor from './pages/YuspDataFlowEditor'
 import YuspifySaasAdmin from './pages/YuspifySaasAdmin'
 import ScaleplexBrandIdentity from './pages/ScaleplexBrandIdentity'
 import RapidsearchCaseStudy from './pages/RapidsearchCaseStudy'
+import CoverCompositionShowcase from './pages/CoverCompositionShowcase'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -44,6 +45,7 @@ function App() {
         <Route path="/yuspify-saas-admin" element={<YuspifySaasAdmin />} />
         <Route path="/scaleplex-brand-identity" element={<ScaleplexBrandIdentity />} />
         <Route path="/rapidsearch-case-study" element={<RapidsearchCaseStudy />} />
+        <Route path="/cover-composition" element={<CoverCompositionShowcase />} />
       </Routes>
       <Footer />
     </>
